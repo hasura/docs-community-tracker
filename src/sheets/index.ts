@@ -40,6 +40,7 @@ export async function writeNewRow(row: SheetRow): Promise<void> {
   const spreadsheetId = process.env.SPREADSHEET_ID;
   const range = "Sheet1";
 
+  // Nice little addition the clears crap out of the way so we write to the correct row(s)
   await sheets.spreadsheets.values.clear({
     spreadsheetId,
     range: "Sheet1!F:ZZ",
@@ -48,7 +49,7 @@ export async function writeNewRow(row: SheetRow): Promise<void> {
   const newRow = [row.link, row.createdAt, row.notes, row.outcome, row.status];
 
   // Append the new row to the sheet
-  const result = await sheets.spreadsheets.values.append({
+  await sheets.spreadsheets.values.append({
     spreadsheetId,
     range,
     valueInputOption: "RAW",

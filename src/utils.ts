@@ -18,3 +18,16 @@ export function eliminateExistingIssues(
 
   return filteredIssues;
 }
+
+export function eliminateExistingDiscussions(
+  discussions: Discussion[],
+  rows: SheetRow[],
+): Discussion[] {
+  const existingLinks = new Set(rows.map((row) => row.link));
+
+  const filteredDiscussions = discussions.filter(
+    (discussion) => !existingLinks.has(discussion.url),
+  );
+
+  return filteredDiscussions;
+}
