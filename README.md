@@ -7,7 +7,7 @@ internal notes and not duplicate our efforts. It works by:
 
 - Fetching new issues and discussions from `hasura` GitHub repos
 - Taking the body of the issue or discussion and parsing it through an OpenAI model to summarize it succinctly
-- Perform an ETL job via a service account to log this into a spreadsheet available to everyone in the org
+- Performing an ETL job via a service account to log this into a spreadsheet available to everyone in the org
 
 The hope is to eventually include Discord threads and — if there's value — pipe this into the `hasura/docs-services`
 repository for use in the dashboard and with PromptQL.
@@ -35,7 +35,7 @@ git clone https://www.github.com/hasura/docs-community-tracker
 cd docs-community-tracker && cp .env.example .env
 ```
 
-Grab the generic values from our vault by searching for `docs-community-tracker env`.
+Grab the generic values from our 1Password vault by searching for `docs-community-tracker env`.
 
 ### Step 3. Create a GitHub PAT with SSO configured
 
