@@ -2,9 +2,7 @@ name: Check for New Community Updates
 
 on:
   schedule:
-    # Schedule the job at 09:00 AM and 20:00 PM UTC daily
-    - cron: "0 9 * * *"
-    - cron: "0 20 * * *"
+    - cron: "0 * * * *"
   workflow_dispatch:
 
 jobs:
