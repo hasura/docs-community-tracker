@@ -16,12 +16,7 @@ repository for use in the dashboard and with PromptQL.
 
 Hasura employees can access the file containing the values generated from this script [here](https://docs.google.com/spreadsheets/d/13tgD0IGwQm5W-98fPvEW9pEa28qyvQX8Vc_xUI8SwQM/edit?usp=sharing).
 
-This runs each day at the following times via a GitHub Action:
-
-- 09:00 AM UTC
-- 20:00 PM UTC
-
-If you want to run the script locally, follow these steps:
+This runs each hour on the hour via a GitHub Action. If you want to run the script locally, follow these steps:
 
 ### Step 1. Clone the repo
 
