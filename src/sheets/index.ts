@@ -60,7 +60,7 @@ export async function writeNewRow(row: SheetRow): Promise<void> {
 
   await sheets.spreadsheets.values.update({
     spreadsheetId,
-    range: "Sheet1!F1",
+    range: "Sheet1!F2",
     valueInputOption: "USER_ENTERED",
     requestBody: {
       values: [
