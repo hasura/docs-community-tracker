@@ -43,7 +43,7 @@ export async function writeNewRow(row: SheetRow): Promise<void> {
   // Nice little addition the clears crap out of the way so we write to the correct row(s)
   await sheets.spreadsheets.values.clear({
     spreadsheetId,
-    range: "Sheet1!F:ZZ",
+    range: "Sheet1!G:ZZ",
   });
 
   const newRow = [row.link, row.createdAt, row.notes, row.outcome, row.status];
@@ -55,6 +55,19 @@ export async function writeNewRow(row: SheetRow): Promise<void> {
     valueInputOption: "RAW",
     requestBody: {
       values: [newRow],
+    },
+  });
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: "Sheet1!F1",
+    valueInputOption: "USER_ENTERED",
+    requestBody: {
+      values: [
+        [
+          '=ARRAYFORMULA(IF(LEN(B2:B), DATEVALUE(LEFT(B2:B, 10)) + TIMEVALUE(MID(B2:B, 12, 8)), ""))',
+        ],
+      ],
     },
   });
 
