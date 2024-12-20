@@ -1,2 +1,2 @@
 export const OWNER = `hasura`;
-export const REPO = `graphql-engine`;
+export const REPOS: string[] = [`graphql-engine`, `ddn-docs`];

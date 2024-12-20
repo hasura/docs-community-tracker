@@ -15,11 +15,18 @@ import {
   eliminateExistingIssues,
   eliminateExistingDiscussions,
 } from "./utils.js";
+import * as config from "./constants.js";
 
 const main = async () => {
   // Get the issues and discussions from GitHub
-  const issues = await fetchIssues();
-  const discussions = await fetchDiscussions();
+  const allIssues = await Promise.all(
+    config.REPOS.map((repo) => fetchIssues(repo)),
+  );
+  const issues = allIssues.flat();
+  const allDiscussions = await Promise.all(
+    config.REPOS.map((repo) => fetchDiscussions(repo)),
+  );
+  const discussions = allDiscussions.flat();
 
   // Get the list from the spreadsheet
   const currentRowsInSheet = await getRows();

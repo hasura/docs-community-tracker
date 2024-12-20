@@ -10,10 +10,9 @@ import {
 } from "../types.js";
 
 const owner = config.OWNER;
-const repo = config.REPO;
 
 // fetchIssues will grab the current open issues in the repo, limiting itself to the first 100.
-export async function fetchIssues(): Promise<Issue[]> {
+export async function fetchIssues(repo: string): Promise<Issue[]> {
   const variables = {
     owner,
     repo,
@@ -56,7 +55,7 @@ export function parseIssue(anIssue: Issue): SheetRow {
 }
 
 // fetchDiscussions will grab the current unanswered discussions in the the repo, limiting itself to the first 100.
-export async function fetchDiscussions(): Promise<Discussion[]> {
+export async function fetchDiscussions(repo: string): Promise<Discussion[]> {
   const variables = {
     owner,
     repo,
