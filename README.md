@@ -53,7 +53,15 @@ npm run start
 
 ## Development
 
-Follow the steps above but swap the `start` script with watch mode via nodemon
+We ask that you don't use the "production" spreadsheet for development and testing. Instead, create a new Google Sheet
+and then share it with `service-account@docs-community.iam.gserviceaccount.com` giving it `Editor` access.
+
+You can then determine the spreadsheet's `id` by taking everything after `.../d/` and before `/edit...` in the sheet's
+URL.
+
+Use this value in your `.env` file instead of the one provided in the vault.
+
+Follow the steps above but swap the `start` script with watch mode via nodemon:
 
 ```sh
 npm run dev
