@@ -9,13 +9,22 @@ import {
   updateIssueBody,
   updateDiscussionBody,
   summarizeDiscussionBody,
+  summarizeDiscordThreadContent,
 } from "./openai/index.js";
 import { getRows, writeNewRow } from "./sheets/index.js";
 import {
   eliminateExistingIssues,
   eliminateExistingDiscussions,
+  shapeDiscordRow,
+  eliminateExistingThreads,
 } from "./utils.js";
 import * as config from "./constants.js";
+import {
+  fetchThreads,
+  filterThreads,
+  fetchFirstMessage,
+} from "./discord/index.js";
+import { MessageDetails } from "./types.js";
 
 const main = async () => {
   // Get the issues and discussions from GitHub
@@ -60,6 +69,42 @@ const main = async () => {
       const summary = await summarizeDiscussionBody(parsed.notes);
       updateDiscussionBody(parsed, summary);
       writeNewRow(parsed);
+    }
+  }
+
+  const threads = await fetchThreads();
+  const filteredThreads = await filterThreads(threads);
+  const shapedMessages: MessageDetails[] = await Promise.all(
+    filteredThreads.map(async (thread) => {
+      const messageDetails = await fetchFirstMessage(thread.id);
+      return shapeDiscordRow(thread.name, messageDetails);
+    }),
+  );
+
+  const newThreads = eliminateExistingThreads(
+    shapedMessages,
+    currentRowsInSheet,
+  );
+
+  function sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  if (newThreads.length < 1) {
+    console.log(`🍻 No new threads from Discord`);
+  } else {
+    for (const thread of newThreads) {
+      writeNewRow({
+        link: thread.url || "",
+        createdAt: thread.createdAt || "",
+        notes: await summarizeDiscordThreadContent(
+          thread.threadName || "",
+          thread.content,
+        ),
+        outcome: "",
+        status: "OPEN",
+      });
+      await sleep(10000);
     }
   }
 };
