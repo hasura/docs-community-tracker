@@ -54,3 +54,24 @@ export function updateDiscussionBody(
   discussion.notes = summary;
   return discussion;
 }
+
+export async function summarizeDiscordThreadContent(
+  threadName: string,
+  content: string,
+): Promise<string> {
+  const note = await client.chat.completions.create({
+    messages: [
+      {
+        role: "user",
+        content: `Summarize this Discord thread into a one-sentence summary of what the user is asking for: ${threadName}\n\n ${content}`,
+      },
+    ],
+    model: "gpt-4o",
+  });
+
+  if (!note.choices[0].message.content) {
+    throw new Error(`Error from OpenAI generating a summary`);
+  }
+
+  return note.choices[0].message.content;
+}
