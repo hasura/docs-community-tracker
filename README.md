@@ -49,7 +49,7 @@ URL.
 
 Use this value in your `.env` file instead of the one provided in the vault.
 
-### Step 4. Run the script
+### Step 5. Run the script
 
 Start watch mode:
 
