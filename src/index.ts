@@ -86,10 +86,6 @@ const main = async () => {
     currentRowsInSheet,
   );
 
-  function sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
   if (newThreads.length < 1) {
     console.log(`🍻 No new threads from Discord`);
   } else {
@@ -104,7 +100,6 @@ const main = async () => {
         outcome: "",
         status: "OPEN",
       });
-      await sleep(10000);
     }
   }
 };
