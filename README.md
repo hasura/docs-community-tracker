@@ -5,18 +5,18 @@
 This script is designed to aggregate all community-related issues into a single actionable list where we can keep
 internal notes and not duplicate our efforts. It works by:
 
-- Fetching new issues and discussions from `hasura` GitHub repos
+- Fetching new issues and discussions from [specified `hasura` GitHub repos](https://github.com/hasura/docs-community-tracker/blob/main/src/constants.ts#L1-L3)
+- Fetching new threads from [selected channels](https://github.com/hasura/docs-community-tracker/blob/main/src/constants.ts#L7-L9) in Discord
 - Taking the body of the issue or discussion and parsing it through an OpenAI model to summarize it succinctly
 - Performing an ETL job via a service account to log this into a spreadsheet available to everyone in the org
-
-The hope is to eventually include Discord threads and — if there's value — pipe this into the `hasura/docs-services`
-repository for use in the dashboard and with PromptQL.
 
 ## Usage
 
 Hasura employees can access the file containing the values generated from this script [here](https://docs.google.com/spreadsheets/d/13tgD0IGwQm5W-98fPvEW9pEa28qyvQX8Vc_xUI8SwQM/edit?usp=sharing).
 
-This runs each hour on the hour via a GitHub Action. If you want to run the script locally, follow these steps:
+This runs each hour on the hour via a GitHub Action. If you want to run the script locally, follow the steps below.
+
+## Development
 
 ### Step 1. Clone the repo
 
@@ -38,25 +38,20 @@ Follow [these steps](https://docs.github.com/en/enterprise-cloud@latest/authenti
 
 Then, use this value to update the `GH_TOKEN` value in your `.env` file.
 
-### Step 4. Run the script
+### Step 4. Create a development copy of the spreadsheet
 
-You can run the script:
-
-```sh
-npm run start
-```
-
-## Development
-
-We ask that you don't use the "production" spreadsheet for development and testing. Instead, create a new Google Sheet
-and then share it with `service-account@docs-community.iam.gserviceaccount.com` giving it `Editor` access.
+We ask that you don't use the "production" spreadsheet for development and testing. Instead, create a copy of the
+"production" Google Sheet
+and then choose to share it the same users (`service-account@docs-community.iam.gserviceaccount.com` with `Editor` access) as the original.
 
 You can then determine the spreadsheet's `id` by taking everything after `.../d/` and before `/edit...` in the sheet's
 URL.
 
 Use this value in your `.env` file instead of the one provided in the vault.
 
-Follow the steps above but swap the `start` script with watch mode via nodemon:
+### Step 4. Run the script
+
+Start watch mode:
 
 ```sh
 npm run dev
