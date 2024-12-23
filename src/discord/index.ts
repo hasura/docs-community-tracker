@@ -20,7 +20,7 @@ export async function fetchThreads(): Promise<Thread[]> {
   return response.data.threads as Thread[];
 }
 
-// filterThreads() returns only the threads that are in the channels list (v2 and v3 help forums)
+// filterThreads() returns only the threads that are in the channels list (v2 and v3 help forums and promptql)
 // and also ensures we're only grabbing the last 30 days
 export async function filterThreads(threads: Thread[]): Promise<Thread[]> {
   let thirtyDaysAgo = new Date();
@@ -43,6 +43,7 @@ export async function filterThreads(threads: Thread[]): Promise<Thread[]> {
 
 // fetchFirstMessage() gets the first message in the thread
 export async function fetchFirstMessage(
+  parentId: string,
   threadId: string,
 ): Promise<MessageDetails> {
   try {
@@ -64,6 +65,7 @@ export async function fetchFirstMessage(
     const createdAt = messages[messages.length - 1].timestamp;
 
     return {
+      channelId: parentId,
       messageId,
       content,
       createdAt,

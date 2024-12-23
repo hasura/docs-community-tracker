@@ -45,7 +45,7 @@ const main = async () => {
   const newIssues = eliminateExistingIssues(issues, currentRowsInSheet);
 
   if (newIssues.length < 1) {
-    console.log(`🍻 No new issues today`);
+    console.log(`🍻 No new GitHub issues`);
   } else {
     // For any issues that are new, summarize them using GPT and ship 'em
     for (const issue of newIssues) {
@@ -62,7 +62,7 @@ const main = async () => {
   );
 
   if (newDisucssions.length < 1) {
-    console.log(`🍻 No new discussions today`);
+    console.log(`🍻 No new GitHub discussion`);
   } else {
     for (const discussion of newDisucssions) {
       let parsed = parseDiscussion(discussion);
@@ -76,7 +76,10 @@ const main = async () => {
   const filteredThreads = await filterThreads(threads);
   const shapedMessages: MessageDetails[] = await Promise.all(
     filteredThreads.map(async (thread) => {
-      const messageDetails = await fetchFirstMessage(thread.id);
+      const messageDetails = await fetchFirstMessage(
+        thread.parent_id,
+        thread.id,
+      );
       return shapeDiscordRow(thread.name, messageDetails);
     }),
   );
