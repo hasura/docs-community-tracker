@@ -86,6 +86,7 @@ export type Thread = {
 };
 
 export type MessageDetails = {
+  channelId: string;
   messageId: string;
   content: string;
   threadName?: string;

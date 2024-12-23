@@ -87,5 +87,6 @@ export function shapeDiscordRow(
 // createMessageLink() builds the URL structure for a Discord message so we can
 // easily add this into the SheetRow
 export function createMessageLink(message: MessageDetails): string {
-  return `https://www.discord.com/channels/${GUILD_ID}/${message.messageId}`;
+  // The format should be: https://www.discord.com/channels/GUILD_ID/CHANNEL_ID/threads/THREAD_ID
+  return `https://www.discord.com/channels/${GUILD_ID}/${message.channelId}/threads/${message.messageId}`;
 }
