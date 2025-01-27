@@ -24,7 +24,7 @@ export async function fetchThreads(): Promise<Thread[]> {
 // and also ensures we're only grabbing the last 30 days
 export async function filterThreads(threads: Thread[]): Promise<Thread[]> {
   let thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 1);
 
   const recentThreads = threads.filter((thread) => {
     const isInChannel = CHANNEL_IDs.includes(thread.parent_id);

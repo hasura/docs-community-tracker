@@ -9,7 +9,7 @@ import { GUILD_ID } from "./constants.js";
 
 export function getYesterdayInISO(): string {
   const now = new Date();
-  now.setDate(now.getDate() - 30);
+  now.setDate(now.getDate() - 1);
   return now.toISOString();
 }
 
@@ -75,18 +75,12 @@ export function sortThreads(recentThreads: Thread[]): Thread[] {
 // exactly what a user is talking about
 export function shapeDiscordRow(
   threadName: string,
+  threadId: string,
   messageDetails: MessageDetails,
 ): MessageDetails {
   return {
     ...messageDetails,
     threadName,
-    url: createMessageLink(messageDetails),
+    url: `https://www.discord.com/channels/${GUILD_ID}/${threadId}`,
   };
-}
-
-// createMessageLink() builds the URL structure for a Discord message so we can
-// easily add this into the SheetRow
-export function createMessageLink(message: MessageDetails): string {
-  // The format should be: https://www.discord.com/channels/GUILD_ID/CHANNEL_ID/threads/THREAD_ID
-  return `https://www.discord.com/channels/${GUILD_ID}/${message.channelId}/threads/${message.messageId}`;
 }
