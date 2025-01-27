@@ -23,15 +23,15 @@ export async function fetchThreads(): Promise<Thread[]> {
 // filterThreads() returns only the threads that are in the channels list (v2 and v3 help forums and promptql)
 // and also ensures we're only grabbing the last 30 days
 export async function filterThreads(threads: Thread[]): Promise<Thread[]> {
-  let thirtyDaysAgo = new Date();
-  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 1);
+  let oneDayAgo = new Date();
+  oneDayAgo.setDate(oneDayAgo.getDate() - 1);
 
   const recentThreads = threads.filter((thread) => {
     const isInChannel = CHANNEL_IDs.includes(thread.parent_id);
     const createdAt = thread.thread_metadata?.create_timestamp
       ? new Date(thread.thread_metadata.create_timestamp)
       : null;
-    const isRecent = createdAt ? createdAt >= thirtyDaysAgo : false;
+    const isRecent = createdAt ? createdAt >= oneDayAgo : false;
 
     return isInChannel && isRecent;
   });
