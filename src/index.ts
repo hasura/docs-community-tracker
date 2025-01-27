@@ -80,7 +80,7 @@ const main = async () => {
         thread.parent_id,
         thread.id,
       );
-      return shapeDiscordRow(thread.name, messageDetails);
+      return shapeDiscordRow(thread.name, thread.id, messageDetails);
     }),
   );
 
