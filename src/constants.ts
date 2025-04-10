@@ -2,7 +2,7 @@
  * GITHUB
  */
 export const OWNER = `hasura`;
-export const REPOS: string[] = [`graphql-engine`, `ddn-docs`, `learn-graphql`];
+export const REPOS: string[] = [`graphql-engine`, `ddn-docs`, `learn-graphql`, `promptql-docs`, `promptql`];
 
 /**
  * DISCORD
